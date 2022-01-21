@@ -27,11 +27,18 @@ class SRModule():
     def setMic(self,mic_index=0):
         self.mic=SpchToText.Microphone(mic_index)
         
-    def getAudio(self,):
+    def getAudio(self):
         with self.mic:
             audio = self.Recognizer.listen(self.mic)
             return audio 
- 
+    
+    def getAudioFromFile(self,filename):
+        with SpchToText.AudioFile(filename) as source:
+        #reads the audio file. Here we use record instead of
+        #listen
+            audio = self.Recognizer.record(source)
+            return audio
+    
     def getTextFromAudio(self,audio_object):
         try:
             MyText = self.Recognizer.recognize_google(audio_object)
